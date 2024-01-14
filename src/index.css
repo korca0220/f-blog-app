@@ -141,14 +141,24 @@ footer a:hover {
   color: black;
 }
 
-.post__delete-box:hover,
-.post__delete-box:focus {
+.post__delete {
+  cursor: pointer;
+}
+.post__delete:hover,
+.post__delete:focus {
   color: black;
 }
 
-.post__edit-box:hover,
-.post__edit-box:focus {
+.post__edit:hover,
+.post__edit:focus,
+.post__edit a:focus,
+.post__edit a:hover {
   color: black;
+}
+
+.post__edit a {
+  text-decoration: none;
+  color: gray;
 }
 
 .post__detail .post__title {
@@ -169,6 +179,11 @@ footer a:hover {
 
 .post__detail .post__text {
   padding: 20px 0px;
+}
+
+.post__edit a {
+  text-decoration: none;
+  color: gray;
 }
 
 .profile__box {
@@ -215,4 +230,60 @@ footer a:hover {
 .profile__logout:hover,
 .profile__logout:focus {
   color: black;
+}
+
+.form {
+  margin: 0 auto;
+  max-width: 680px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.form input {
+  height: 20px;
+  padding: 10px 10px;
+  font-size: 16px;
+  border-radius: 0.3rem;
+  border: 1px solid lightgray;
+  width: 96%;
+  max-width: 680px;
+}
+
+.form textarea {
+  min-height: 400px;
+  padding: 10px 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+  border: 1px solid lightgray;
+  width: 96%;
+  max-width: 680px;
+}
+
+.form .form__block {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.form .form__btn-submit {
+  width: 100%;
+  height: 48px;
+  padding: 10px 10px;
+  float: right;
+  cursor: pointer;
+  margin: 0 auto;
+  background-color: #2563eb;
+  color: white;
+}
+
+.form .form__btn-submit:hover,
+.form .form__btn-submit:focus {
+  background-color: #1945a4;
 }
