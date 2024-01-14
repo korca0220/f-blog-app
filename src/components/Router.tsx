@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "../pages/home";
 import LoginPage from "../pages/login";
@@ -9,10 +8,11 @@ import PostNew from "../pages/posts/new";
 import Profile from "../pages/profile";
 import SignUpPage from "../pages/signup";
 
-export default function Router() {
-  // Firebase Auth가 인증되었으면 true
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+interface RouterProps {
+  isAuthenticated: boolean;
+}
 
+export default function Router({ isAuthenticated }: RouterProps) {
   return (
     <>
       <Routes>
@@ -35,10 +35,7 @@ export default function Router() {
           <>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route
-              path="*"
-              element={<LoginPage/>}
-            ></Route>
+            <Route path="*" element={<LoginPage />}></Route>
           </>
         )}
       </Routes>
