@@ -16,7 +16,7 @@ export default function LoginForm() {
       target: { name, value },
     } = e;
 
-    if (name == "email") {
+    if (name === "email") {
       setEmail(value);
 
       const validRegex =
@@ -29,7 +29,7 @@ export default function LoginForm() {
       }
     }
 
-    if (name == "password") {
+    if (name === "password") {
       setPassword(value);
 
       if (value?.length < 8) {
