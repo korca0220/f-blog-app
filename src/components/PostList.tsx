@@ -1,12 +1,21 @@
 import AuthContext from "context/AuthContext";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "firebaseApp";
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 interface PostListProps {
   hasNavigation?: boolean;
+  defaultTab?: TabType;
 }
 
 export interface PostProps {
@@ -15,18 +24,20 @@ export interface PostProps {
   email: string;
   summary: string;
   content: string;
-  createAt: string;
+  createdAt: string;
   updatedAt: string;
   uid: string;
 }
 
 type TabType = "all" | "my";
 
-export default function PostList({ hasNavigation = true }: PostListProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("all");
+export default function PostList({
+  hasNavigation = true,
+  defaultTab = "all",
+}: PostListProps) {
+  const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
   const [posts, setPosts] = useState<PostProps[]>([]);
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const handleDelete = async (id: string) => {
     const confirm = window.confirm("해당 게시글을 삭제하시겠습니까?");
@@ -39,8 +50,17 @@ export default function PostList({ hasNavigation = true }: PostListProps) {
   };
 
   const getPosts = async () => {
-    const data = await getDocs(collection(db, "posts"));
     setPosts([]);
+
+    let postsRef = collection(db, "posts");
+    let postsQuery;
+
+    if (activeTab === "my" && user) {
+      postsQuery = query(postsRef, where("uid", "==", user?.uid));
+    } else {
+      postsQuery = query(postsRef, orderBy("createdAt", "desc"));
+    }
+    const data = await getDocs(postsQuery);
 
     data?.forEach((doc) => {
       const dataObj = { ...doc.data(), id: doc.id };
@@ -50,7 +70,7 @@ export default function PostList({ hasNavigation = true }: PostListProps) {
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [activeTab]);
 
   return (
     <>
@@ -80,7 +100,7 @@ export default function PostList({ hasNavigation = true }: PostListProps) {
                 <div className="post__profile-box">
                   <div className="post__profile" />
                   <div className="post__author-name">{post?.email}</div>
-                  <div className="post__date">{post?.createAt}</div>
+                  <div className="post__date">{post?.createdAt}</div>
                 </div>
                 <div className="post__title"> {post?.title}</div>
                 <div className="post__text">{post?.summary}</div>
