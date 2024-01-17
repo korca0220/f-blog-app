@@ -17,7 +17,12 @@ interface PostListProps {
   hasNavigation?: boolean;
   defaultTab?: TabType | CategoryType;
 }
-
+export interface CommentProps {
+  content: string;
+  uid: string;
+  email: string;
+  createdAt: string;
+}
 export interface PostProps {
   id?: string;
   title: string;
@@ -28,6 +33,7 @@ export interface PostProps {
   updatedAt: string;
   uid: string;
   category?: CategoryType;
+  comments: CommentProps[];
 }
 
 type TabType = "all" | "my";
